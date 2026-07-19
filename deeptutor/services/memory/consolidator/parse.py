@@ -124,7 +124,7 @@ def _parse_one_op(raw_op: Any) -> Op | None:
 
 
 def _extract_json_object(raw: str) -> str | None:
-    """Strip code fences and pull out the first top-level JSON object."""
+    """Strip code fences and decode the first top-level JSON object."""
     text = raw.strip()
     text = re.sub(r"^```[a-zA-Z]*\s*", "", text)
     text = re.sub(r"\s*```$", "", text)
