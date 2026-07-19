@@ -129,7 +129,10 @@ def _extract_json_object(raw: str) -> str | None:
     text = re.sub(r"^```[a-zA-Z]*\s*", "", text)
     text = re.sub(r"\s*```$", "", text)
     start = text.find("{")
-    end = text.rfind("}")
-    if start == -1 or end == -1 or end <= start:
+    if start == -1:
         return None
-    return text[start : end + 1]
+    try:
+        _parsed, end = json.JSONDecoder().raw_decode(text[start:])
+    except json.JSONDecodeError:
+        return None
+    return text[start : start + end]
